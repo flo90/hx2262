@@ -16,10 +16,12 @@
    along with this program.  If not, see [http://www.gnu.org/licenses/].
 */
 
-#ifndef _HX2262_H_
-#define _HX2262_H_
-#include <inttypes.h>
+#ifndef _ELROAB440_H_
+#define _ELROAB440_H_
 
-uint8_t hx2262_send(char *code, uint8_t repeat);
+#include <inttypes.h>
+#include <stdbool.h>
+
+uint8_t elroab440_send(char *code, uint8_t repeat ,bool state);
 
 #endif

@@ -21,5 +21,5 @@
 #include <inttypes.h>
 
 uint8_t hx2262_send(char *code, uint8_t repeat);
-
+uint8_t elroab440_send(char *code, uint8_t repeat ,bool state);
 #endif

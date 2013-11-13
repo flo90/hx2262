@@ -113,3 +113,41 @@ uint8_t hx2262_send(char *code, uint8_t repeat)
   
   return 0;
 }
+
+uint8_t elroab440_send(char *code, uint8_t repeat, bool state)
+{
+  uint8_t i;
+  char buf[12];
+  
+  for(i = 0; i < 10; i++)
+  {
+    if(code[i] == '0')
+    {
+      buf[i] = 'f';
+    }
+    
+    else if(code[i] == '1')
+    {
+      buf[i] = '0';
+    }
+    
+    else
+    {
+      return 1;
+    }
+  }
+  
+  if(state)
+  {
+    buf[10] = '0';
+    buf[11] = '0';
+  }
+  
+  else
+  {
+    buf[10] = '0';
+    buf[11] = 'f';
+  }
+  
+  return hx2262_send(buf, repeat);
+}

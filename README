@@ -1,0 +1,37 @@
+HX2262 LIB
+
+This is just a very small lib to emulate the HX2262 (PT2262) remote encoder chip
+which is often used in R/C power outlets.
+
+The HX2262 serialize a 12 bit codeword. Remember that every bit has 3 states.
+The first 2 states are the classic binary states 1 and 0.
+The third state is 'floating', this means the addres pin of the chip is just not connected.
+
+For example some power outlets use a DIP switch which connects the address pins to ground (0) or lets them
+unconnected (f).
+
+How to use?
+
+Copy the files or the whole folder to your project and implement the following functions in hx2262.c:
+
+static inline void clk_periode(uint8_t i);
+static inline void enabletx(void);
+static inline void disabletx(void);
+
+The functions enabletx and disabletx just enable and disable the transmitter.
+
+In clk_periode you have to implement a delay which is i * clockperiode long.
+By default in many R/C power outlets the clock periode takes 100us.
+
+After you have implemented the 3 functions you can use the lib.
+
+Until now you have two options to use the lib:
+
+Firstly you use hx2262_send(...). With this function you have full control of the signal generation.
+You can set all 12 bits as you like.
+
+Secondly you can use the more specialized function hx2262_elroab440_send(...). This function generate the 12 bits
+specially for the elroab440 series power outlets. This function expect a 10 digit long code which only have 1 and 0.
+To determine the code just open the backplate of one power outlet and look how the positions of the switches are.
+If a switch is up then you write a 1 if the switch is down you write a zero.
+A valid code looks like this: "1010010100"

@@ -114,7 +114,7 @@ uint8_t hx2262_send(char *code, uint8_t repeat)
   return 0;
 }
 
-uint8_t elroab440_send(char *code, uint8_t repeat, bool state)
+uint8_t hx2262_elroab440_send(char *code, bool state, uint8_t repeat)
 {
   uint8_t i;
   char buf[12];

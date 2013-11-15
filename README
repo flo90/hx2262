@@ -5,7 +5,7 @@ which is often used in R/C power outlets.
 
 The HX2262 serialize a 12 bit codeword. Remember that every bit has 3 states.
 The first 2 states are the classic binary states 1 and 0.
-The third state is 'floating', this means the addres pin of the chip is just not connected.
+The third state is 'floating', this means the address pin of the chip is just not connected.
 
 For example some power outlets use a DIP switch which connects the address pins to ground (0) or lets them
 unconnected (f).
@@ -20,8 +20,15 @@ static inline void disabletx(void);
 
 The functions enabletx and disabletx just enable and disable the transmitter.
 
+OLD (dont use this):
+
 In clk_periode you have to implement a delay which is i * clockperiode long.
 By default in many R/C power outlets the clock periode takes 100us.
+
+NEW:
+To reduce clk_periode() call overhead i decide to divide the signal by 4.
+Now you have to implement i * clockperiode but one clock period takes 
+4*100us=400us now.
 
 After you have implemented the 3 functions you can use the lib.
 

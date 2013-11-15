@@ -69,28 +69,29 @@ uint8_t hx2262_send(char *code, uint8_t repeat)
   {
     switch(code[i])
     {
+      //signal periodes devided by 4 to reduce clk_periode call overhead
       //0 is represented by 4 periodes on 12 periodes off and so on...
       case '0':
-	signal[j++]=4;
-	signal[j++]=12;
-	signal[j++]=4;
-	signal[j++]=12;
+	signal[j++]=4/4;
+	signal[j++]=12/4;
+	signal[j++]=4/4;
+	signal[j++]=12/4;
 	break;
 	
       //1 is represented by 12 periodes on 4 periodes off and so on...
       case '1':
-	signal[j++]=12;
-	signal[j++]=4;
-	signal[j++]=12;
-	signal[j++]=4;
+	signal[j++]=12/4;
+	signal[j++]=4/4;
+	signal[j++]=12/4;
+	signal[j++]=4/4;
 	break;
       
       //f is represented by 4 periodes on 12 off 12 on 4 off
       case 'f':
-	signal[j++]=4;
-	signal[j++]=12;
-	signal[j++]=12;
-	signal[j++]=4;
+	signal[j++]=4/4;
+	signal[j++]=12/4;
+	signal[j++]=12/4;
+	signal[j++]=4/4;
 	break;
 	
       default:
@@ -98,8 +99,8 @@ uint8_t hx2262_send(char *code, uint8_t repeat)
     }
   }
   
-  signal[48] = 4;
-  signal[49] = 124;
+  signal[48] = 4/4;
+  signal[49] = 124/4;
     
   while(repeat--)
   {

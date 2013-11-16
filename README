@@ -12,13 +12,12 @@ unconnected (f).
 
 How to use?
 
-Copy the files or the whole folder to your project and implement the following functions in hx2262.c:
+Copy the files or the whole folder to your project and execute the hx2262_init(...);
+As parameter assign 3 function pointers. The first two are enabletx and disabletx.
 
-static inline void clk_periode(uint8_t i);
-static inline void enabletx(void);
-static inline void disabletx(void);
+These functions should just enable and disable the transmitter.
 
-The functions enabletx and disabletx just enable and disable the transmitter.
+The third function pointer refers to a clk_periode function.
 
 OLD (dont use this):
 

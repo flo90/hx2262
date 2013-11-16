@@ -17,30 +17,34 @@
 */
 
 #include "hx2262.h"
+#include <stdlib.h>
 #include <stdbool.h>
 #include <inttypes.h>
 
-bool txstate = false;
+void (*enabletx) (void) = NULL;
+void (*disabletx) (void) = NULL;
+void (*clk_periode) (uint8_t i) = NULL;
 
-uint8_t send_element(uint8_t code);
-
-static inline void clk_periode(uint8_t i)
+uint8_t hx2262_init(void (*penabletx) (void), void (*pdisabletx) (void), void (*pclk_periode) (uint8_t i))
 {
-  //implement a i times clock periode here
-}
-
-static inline void enabletx(void)
-{
-  //enable transmitter here
-}
-
-static inline void disabletx(void)
-{
-  //disable transmitter here
+  if(!penabletx || !pdisabletx || !pclk_periode)
+  {
+    return 1;
+  }
+  
+  enabletx = penabletx;
+  disabletx = pdisabletx;
+  clk_periode = pclk_periode;
+  
+  disabletx();
+  
+  return 0;
 }
 
 static inline void toggletx(void)
 {
+  static bool txstate = false;
+  
   if(txstate)
   {
     disabletx();
@@ -56,9 +60,12 @@ static inline void toggletx(void)
 
 uint8_t hx2262_send(char *code, uint8_t repeat)
 {
-  uint8_t i,j;
+  uint8_t i, j = 0;
   
-  j=0;
+  if(!enabletx || !disabletx || !clk_periode)
+  {
+    return 1;
+  }
   
   //this array holds the generated signal
   uint8_t signal[50];

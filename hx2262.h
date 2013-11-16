@@ -21,6 +21,7 @@
 #include <inttypes.h>
 #include <stdbool.h>
 
+uint8_t hx2262_init(void (*penabletx) (void), void (*pdisabletx) (void), void (*pclk_periode) (uint8_t i));
 uint8_t hx2262_send(char *code, uint8_t repeat);
 uint8_t hx2262_elroab440_send(char *code, bool state, uint8_t repeat);
 #endif

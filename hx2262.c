@@ -145,7 +145,7 @@ uint8_t hx2262_elroab440_send(char *code, bool state, uint8_t repeat)
     }
   }
   
-  if(state)
+  if(!state)
   {
     buf[10] = '0';
     buf[11] = '0';
